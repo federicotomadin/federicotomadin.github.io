@@ -121,3 +121,13 @@ fabric.properties
 .idea/**/azureSettings.xml
 
 # End of https://www.toptal.com/developers/gitignore/api/webstorm
+
+# Node / Vite
+node_modules/
+dist/
+.env
+.env.local
+*.tsbuildinfo
+
+# Cursor
+.cursor/
