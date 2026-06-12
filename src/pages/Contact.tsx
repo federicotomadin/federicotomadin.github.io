@@ -14,12 +14,17 @@ export default function Contact() {
     const formData = new FormData(form)
 
     if (!accessKey) {
+      if (import.meta.env.PROD) {
+        setStatus('error')
+        return
+      }
+
       const subject = encodeURIComponent(String(formData.get('subject') || 'Portfolio contact'))
       const body = encodeURIComponent(
         `Name: ${formData.get('name')}\nEmail: ${formData.get('email')}\n\n${formData.get('message')}`,
       )
       window.location.href = `mailto:${SITE.email}?subject=${subject}&body=${body}`
-      setStatus('success')
+      setStatus('idle')
       return
     }
 
@@ -101,12 +106,18 @@ export default function Contact() {
                 <p className="text-sm text-green-400">Message sent! I&apos;ll get back to you soon.</p>
               )}
               {status === 'error' && (
-                <p className="text-sm text-red-400">Something went wrong. Try emailing me directly.</p>
+                <p className="text-sm text-red-400">
+                  Something went wrong. Email me at{' '}
+                  <a href={`mailto:${SITE.email}`} className="text-brand underline">
+                    {SITE.email}
+                  </a>
+                  .
+                </p>
               )}
-              {!accessKey && (
+              {!accessKey && import.meta.env.DEV && (
                 <p className="text-xs text-muted">
-                  Set <code className="text-brand">VITE_WEB3FORMS_ACCESS_KEY</code> for serverless form delivery, or
-                  the form opens your email client.
+                  Set <code className="text-brand">VITE_WEB3FORMS_ACCESS_KEY</code> in <code>.env</code> for serverless
+                  form delivery.
                 </p>
               )}
             </form>

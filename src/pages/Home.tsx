@@ -1,4 +1,4 @@
-import { useEffect, useState, type CSSProperties } from 'react'
+import { useCallback, useEffect, useState, type CSSProperties } from 'react'
 import { mainSkills, skills, testimonials } from '../data/home'
 import { SITE } from '../constants'
 
@@ -28,6 +28,19 @@ function SkillBar({ label, value }: { label: string; value: number }) {
 
 export default function Home() {
   const [activeTestimonial, setActiveTestimonial] = useState(0)
+
+  const goNext = useCallback(() => {
+    setActiveTestimonial((prev) => (prev + 1) % testimonials.length)
+  }, [])
+
+  const goPrev = useCallback(() => {
+    setActiveTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)
+  }, [])
+
+  useEffect(() => {
+    const interval = setInterval(goNext, 6000)
+    return () => clearInterval(interval)
+  }, [goNext])
 
   return (
     <>
@@ -111,27 +124,55 @@ export default function Home() {
       <section className="border-t border-white/10 bg-surface-light py-20">
         <div className="mx-auto max-w-4xl px-4 text-center">
           <h2 className="mb-12 text-3xl font-bold">Client Testimonial</h2>
-          <blockquote className="text-lg leading-relaxed text-white/80">
-            &ldquo;{testimonials[activeTestimonial].quote}&rdquo;
-          </blockquote>
-          <div className="mt-8 flex items-center justify-center gap-4">
-            <img
-              src={testimonials[activeTestimonial].avatar}
-              alt={testimonials[activeTestimonial].name}
-              className="h-14 w-14 rounded-full object-cover"
-            />
-            <div className="text-left">
-              <p className="font-semibold">{testimonials[activeTestimonial].name}</p>
-              <p className="text-sm text-muted">{testimonials[activeTestimonial].role}</p>
+
+          <div className="relative">
+            <button
+              type="button"
+              onClick={goPrev}
+              className="absolute -left-2 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/10 bg-surface-light p-3 text-white/60 transition hover:border-brand/50 hover:text-brand md:-left-14"
+              aria-label="Previous testimonial"
+            >
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+
+            <div className="px-10 md:px-0">
+              <blockquote className="min-h-[120px] text-lg leading-relaxed text-white/80 transition-opacity duration-300">
+                &ldquo;{testimonials[activeTestimonial].quote}&rdquo;
+              </blockquote>
+              <div className="mt-8 flex items-center justify-center gap-4">
+                <img
+                  src={testimonials[activeTestimonial].avatar}
+                  alt={testimonials[activeTestimonial].name}
+                  className="h-14 w-14 rounded-full object-cover"
+                />
+                <div className="text-left">
+                  <p className="font-semibold">{testimonials[activeTestimonial].name}</p>
+                  <p className="text-sm text-muted">{testimonials[activeTestimonial].role}</p>
+                </div>
+              </div>
             </div>
+
+            <button
+              type="button"
+              onClick={goNext}
+              className="absolute -right-2 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/10 bg-surface-light p-3 text-white/60 transition hover:border-brand/50 hover:text-brand md:-right-14"
+              aria-label="Next testimonial"
+            >
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
           </div>
+
           <div className="mt-8 flex justify-center gap-2">
             {testimonials.map((_, i) => (
               <button
                 key={i}
                 type="button"
                 onClick={() => setActiveTestimonial(i)}
-                className={`h-2.5 w-2.5 rounded-full transition ${i === activeTestimonial ? 'bg-brand' : 'bg-white/30'}`}
+                className={`h-2.5 w-2.5 rounded-full transition ${i === activeTestimonial ? 'bg-brand' : 'bg-white/30 hover:bg-white/50'}`}
                 aria-label={`Testimonial ${i + 1}`}
               />
             ))}

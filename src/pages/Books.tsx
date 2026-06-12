@@ -19,36 +19,45 @@ export default function Books() {
           {recommendedBooks.map((book) => (
             <article
               key={book.title}
-              className="flex flex-col rounded-2xl border border-white/10 bg-surface-light p-8 transition hover:border-brand/40"
+              className="flex flex-col rounded-2xl border border-white/10 bg-surface-light p-8 transition hover:border-brand/40 sm:flex-row sm:gap-6"
             >
-              <div className="mb-4 flex items-start justify-between gap-4">
-                <div>
-                  <h3 className="text-xl font-bold leading-snug">{book.title}</h3>
-                  <p className="mt-1 text-sm text-brand">{book.author}</p>
-                </div>
-                {book.language && (
-                  <span className="shrink-0 rounded-full border border-white/15 px-3 py-0.5 text-xs text-muted">
-                    {book.language}
-                  </span>
-                )}
+              <div className="mb-4 shrink-0 sm:mb-0">
+                <img
+                  src={book.coverUrl}
+                  alt={`${book.title} cover`}
+                  className="h-44 w-32 rounded-lg object-cover shadow-lg"
+                />
               </div>
-              <p className="flex-1 text-sm leading-relaxed text-white/70">{book.description}</p>
-              <a
-                href={book.purchaseUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-brand hover:underline"
-              >
-                {book.purchaseLabel ?? 'Get the book'}
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                  />
-                </svg>
-              </a>
+              <div className="flex flex-1 flex-col">
+                <div className="mb-4 flex items-start justify-between gap-4">
+                  <div>
+                    <h3 className="text-xl font-bold leading-snug">{book.title}</h3>
+                    <p className="mt-1 text-sm text-brand">{book.author}</p>
+                  </div>
+                  {book.language && (
+                    <span className="shrink-0 rounded-full border border-white/15 px-3 py-0.5 text-xs text-muted">
+                      {book.language}
+                    </span>
+                  )}
+                </div>
+                <p className="flex-1 text-sm leading-relaxed text-white/70">{book.description}</p>
+                <a
+                  href={book.purchaseUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-brand hover:underline"
+                >
+                  {book.purchaseLabel ?? 'Get the book'}
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                    />
+                  </svg>
+                </a>
+              </div>
             </article>
           ))}
         </div>
