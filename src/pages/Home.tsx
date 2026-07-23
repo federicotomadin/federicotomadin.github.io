@@ -49,9 +49,9 @@ export default function Home() {
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 md:grid-cols-2 md:py-24">
           <div className="order-2 md:order-1">
             <img
-              src="/assets/img/hero/fede.png"
+              src="/assets/img/hero/fede.jpeg"
               alt="Federico Tomadin"
-              className="mx-auto max-h-[420px] w-auto drop-shadow-2xl"
+              className="mx-auto aspect-square w-full max-w-[320px] object-cover rounded-[42%] border border-white/10 drop-shadow-2xl md:max-w-[400px]"
             />
           </div>
           <div className="order-1 md:order-2">
