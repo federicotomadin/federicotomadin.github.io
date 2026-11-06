@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { NAV_LINKS, SITE, SOCIAL } from '../constants'
+import VisitCounter from './VisitCounter'
 
 export default function Footer() {
   return (
@@ -59,6 +60,7 @@ export default function Footer() {
               {SITE.name}
             </a>
           </p>
+          <VisitCounter />
           <nav className="flex flex-wrap gap-6">
             {NAV_LINKS.filter((l) => !l.children).map((link) => (
               <Link key={link.path} to={link.path} className="text-sm capitalize text-white/50 hover:text-brand">

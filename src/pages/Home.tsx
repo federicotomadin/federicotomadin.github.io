@@ -37,10 +37,13 @@ export default function Home() {
     setActiveTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)
   }, [])
 
+  const [isPaused, setIsPaused] = useState(false)
+
   useEffect(() => {
-    const interval = setInterval(goNext, 6000)
-    return () => clearInterval(interval)
-  }, [goNext])
+    if (isPaused) return
+    const timeout = setTimeout(goNext, 6000)
+    return () => clearTimeout(timeout)
+  }, [goNext, activeTestimonial, isPaused])
 
   return (
     <>
@@ -137,21 +140,31 @@ export default function Home() {
               </svg>
             </button>
 
-            <div className="px-10 md:px-0">
-              <blockquote className="min-h-[120px] text-lg leading-relaxed text-white/80 transition-opacity duration-300">
-                &ldquo;{testimonials[activeTestimonial].quote}&rdquo;
-              </blockquote>
-              <div className="mt-8 flex items-center justify-center gap-4">
-                <img
-                  src={testimonials[activeTestimonial].avatar}
-                  alt={testimonials[activeTestimonial].name}
-                  className="h-14 w-14 rounded-full object-cover"
-                />
-                <div className="text-left">
-                  <p className="font-semibold">{testimonials[activeTestimonial].name}</p>
-                  <p className="text-sm text-muted">{testimonials[activeTestimonial].role}</p>
-                </div>
-              </div>
+            <div
+              className="grid px-10 md:px-0"
+              onMouseEnter={() => setIsPaused(true)}
+              onMouseLeave={() => setIsPaused(false)}
+              onFocus={() => setIsPaused(true)}
+              onBlur={() => setIsPaused(false)}
+            >
+              {testimonials.map((t, i) => (
+                <figure
+                  key={t.name}
+                  aria-hidden={i !== activeTestimonial}
+                  className={`flex flex-col justify-center transition-opacity duration-500 ease-in-out [grid-area:1/1] ${
+                    i === activeTestimonial ? 'opacity-100' : 'pointer-events-none opacity-0'
+                  }`}
+                >
+                  <blockquote className="text-lg leading-relaxed text-white/80">&ldquo;{t.quote}&rdquo;</blockquote>
+                  <figcaption className="mt-8 flex items-center justify-center gap-4">
+                    <img src={t.avatar} alt={t.name} className="h-14 w-14 rounded-full object-cover" />
+                    <div className="text-left">
+                      <p className="font-semibold">{t.name}</p>
+                      <p className="text-sm text-muted">{t.role}</p>
+                    </div>
+                  </figcaption>
+                </figure>
+              ))}
             </div>
 
             <button

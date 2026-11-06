@@ -11,6 +11,14 @@ export interface WorkExperience {
 /** Professional experience — aligned with LinkedIn profile */
 export const workExperiences: WorkExperience[] = [
   {
+    company: 'subQdocs',
+    role: 'Full-stack Developer',
+    period: 'Present',
+    industry: 'Healthcare · AI Documentation',
+    href: 'https://subqdocs.ai/',
+    domain: 'subqdocs.ai',
+  },
+  {
     company: 'Terra Insure',
     role: 'Full-stack Developer',
     industry: 'Insurance · Workers\' Comp',

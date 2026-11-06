@@ -9,6 +9,9 @@ export const SITE = {
   cv: import.meta.env.VITE_CV_URL ?? '/cv/federico-tomadin-cv.pdf',
 } as const
 
+const goatcounterCode = import.meta.env.VITE_GOATCOUNTER_CODE
+export const GOATCOUNTER_URL = goatcounterCode ? `https://${goatcounterCode}.goatcounter.com` : null
+
 export const SOCIAL = [
   { label: 'Twitter', href: 'https://twitter.com/federicotomadin' },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/federicotomadin/' },
