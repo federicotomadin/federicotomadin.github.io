@@ -22,7 +22,7 @@ export default function VisitCounter() {
 
   return (
     <p className="text-sm text-white/50">
-      <span className="font-medium text-white/70">{count}</span> visits
+      <span className="font-medium text-white/70">{count}</span> {count === '1' ? 'visit' : 'visits'}
     </p>
   )
 }

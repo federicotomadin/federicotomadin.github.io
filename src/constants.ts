@@ -12,6 +12,8 @@ export const SITE = {
 const goatcounterCode = import.meta.env.VITE_GOATCOUNTER_CODE
 export const GOATCOUNTER_URL = goatcounterCode ? `https://${goatcounterCode}.goatcounter.com` : null
 
+export const CLARITY_PROJECT_ID = import.meta.env.VITE_CLARITY_PROJECT_ID ?? null
+
 export const SOCIAL = [
   { label: 'Twitter', href: 'https://twitter.com/federicotomadin' },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/federicotomadin/' },
