@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react'
-import { GOATCOUNTER_URL } from '../constants'
+import { CLARITY_PROJECT_ID, GOATCOUNTER_URL } from '../constants'
+
+const ANALYTICS_URL = CLARITY_PROJECT_ID
+  ? `https://clarity.microsoft.com/projects/view/${CLARITY_PROJECT_ID}/`
+  : GOATCOUNTER_URL
 
 export default function VisitCounter() {
   const [count, setCount] = useState<string | null>(null)
@@ -18,11 +22,17 @@ export default function VisitCounter() {
     return () => controller.abort()
   }, [])
 
-  if (!count) return null
+  if (!count || !ANALYTICS_URL) return null
 
   return (
-    <p className="text-sm text-white/50">
+    <a
+      href={ANALYTICS_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-sm text-white/50 transition hover:text-brand"
+      title="View analytics"
+    >
       <span className="font-medium text-white/70">{count}</span> {count === '1' ? 'visit' : 'visits'}
-    </p>
+    </a>
   )
 }
